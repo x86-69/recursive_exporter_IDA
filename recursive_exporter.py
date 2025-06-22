@@ -194,7 +194,12 @@ def perform_export(force_disassembly=False):
     finally:
         idaapi.hide_wait_box()
 
-    output_file_path = ida_kernwin.ask_file(1, "*.txt", "Save Recursive Export")
+    if force_disassembly:
+        glob = "*.txt"
+    else:
+        glob = "*.c"
+
+    output_file_path = ida_kernwin.ask_file(1, glob, "Save Recursive Export")
     if not output_file_path:
         idaapi.msg("Export cancelled by user.\n")
         return
