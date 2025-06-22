@@ -206,18 +206,18 @@ def perform_export(force_disassembly=False):
             f.write(f"// Export mode: {'Disassembly' if force_disassembly else 'Decompile'}\n")
             f.write(f"// Total functions found: {len(processed_funcs)}\n")
             f.write(f"// Total global variables referenced: {len(all_globals)}\n")
-            f.write("\n" + "="*80 + "\n\n")
+            f.write("\n//" + "="*80 + "\n\n")
 
             if all_globals:
                 f.write("// --- REFERENCED GLOBAL VARIABLES ---\n\n")
                 for glob_ea in sorted(list(all_globals)):
                     f.write(get_variable_definition(glob_ea) + "\n")
-                f.write("\n" + "="*80 + "\n\n")
+                f.write("\n//" + "="*80 + "\n\n")
             
             f.write("// --- RECURSIVELY CALLED FUNCTIONS ---\n\n")
             for func_ea in sorted(list(processed_funcs)):
                 f.write(output_code.get(func_ea, f"// ERROR: Code not found for 0x{func_ea:X}\n"))
-                f.write("\n" + "-"*40 + "\n\n")
+                f.write("\n//" + "-"*40 + "\n\n")
                 
         ida_kernwin.info(f"Successfully exported {len(processed_funcs)} functions to\n{output_file_path}")
     except IOError as e:
