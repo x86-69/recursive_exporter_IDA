@@ -35,7 +35,7 @@ from collections import deque
 PLUGIN_NAME = "Recursive Function Exporter"
 ACTION_DECOMPILE_NAME = "exporter:decompile"
 ACTION_DISASSEMBLE_NAME = "exporter:disassemble"
-MAX_SIZE_VAR = 128
+MAX_SIZE = 128
 
 # --- Core Logic ---
 
@@ -117,7 +117,7 @@ def get_function_disassembly(func_ea):
 def get_variable_definition(ea):
     """
     Formats a line describing a global variable. If the variable's size
-    is MAX_SIZE_VAR bytes or less, its content will also be printed.
+    is MAX_SIZE bytes or less, its content will also be printed.
     """
     seg = ida_segment.getseg(ea)
     if not seg:
@@ -132,7 +132,7 @@ def get_variable_definition(ea):
     
     content_str = ""
     # Check if size is valid (greater than 0) and within the threshold
-    if 0 < size <= MAX_SIZE_VAR:
+    if 0 < size <= MAX_SIZE:
         # Read the raw bytes of the variable from the database
         content_bytes = ida_bytes.get_bytes(ea, size)
         if content_bytes:
